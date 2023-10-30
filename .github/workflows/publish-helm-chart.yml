@@ -22,7 +22,7 @@ jobs:
           REGISTRY: "ghcr.io"
           REPOSITORY: "${{ github.repository }}"
           TOKEN: "${{ github.token }}"
-          USER: "${{ github.actor }}"
+          USER: "${{ github.repository_owner }}"
         run: |
           rm -rf dist
           mkdir dist

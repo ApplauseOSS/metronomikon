@@ -21,7 +21,7 @@ jobs:
         env:
           REGISTRY: "ghcr.io"
           REPOSITORY: "${{ github.repository }}"
-          TOKEN: "${{ github.token }}"
+          TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           USER: "${{ github.repository_owner }}"
         run: |
           rm -rf dist

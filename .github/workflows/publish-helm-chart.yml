@@ -3,6 +3,10 @@ name: publish-helm-chart
 on:
   push:
     branches: ['master']
+    tags:
+      - '*'
+    paths:
+      - 'helm/**'
 
 concurrency: ${{ github.ref }}
 
@@ -13,9 +17,9 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Install Helm
-        uses: azure/setup-helm@v3
+        uses: azure/setup-helm@v4.2.0
       - name: Package and upload chart
         shell: bash
         env:

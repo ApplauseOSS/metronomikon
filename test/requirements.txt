@@ -1,2 +1,2 @@
-requests==2.31.0
+requests==2.32.0
 behave==1.2.6

@@ -44,6 +44,7 @@ cleanup_test_data() {
 
 run_tests() {
 	cd ${BASEDIR}
+	pip list
 	behave
 }
 

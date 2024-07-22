@@ -1,15 +1,14 @@
 module github.com/applauseoss/metronomikon
 
 go 1.21
-
-toolchain go1.21.8
+toolchain go1.22.5
 
 require (
 	github.com/gin-gonic/gin v1.10.0
 	gopkg.in/yaml.v2 v2.4.0
-	k8s.io/api v0.29.6
-	k8s.io/apimachinery v0.29.6
-	k8s.io/client-go v0.29.6
+	k8s.io/api v0.30.3
+	k8s.io/apimachinery v0.30.3
+	k8s.io/client-go v0.30.3
 )
 
 require (

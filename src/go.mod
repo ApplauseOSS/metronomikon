@@ -1,8 +1,6 @@
 module github.com/applauseoss/metronomikon
 
-go 1.22.0
-
-toolchain go1.22.8
+go 1.22.9
 
 require (
 	github.com/gin-gonic/gin v1.10.0

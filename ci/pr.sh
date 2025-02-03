@@ -1,23 +1,25 @@
 #!/bin/bash
 
-K3S_IMAGE_TAG="v1.21.10-k3s1"
-K3D_VERSION=4.4.8
+K3S_IMAGE_TAG="v1.31.4-k3s1"
+K3D_VERSION=5.8.1
 CLUSTER_NAME=metronomikon-ci
 
 BASEDIR=$(cd $(dirname $0)/..; pwd -P)
 
+set -e
+
 cd ${BASEDIR}
 
 # Install k3d
-k3d --version || \
+k3d --version >/dev/null || \
 	curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | TAG=v${K3D_VERSION} bash
 
 # Create k3d cluster
 k3d cluster delete ${CLUSTER_NAME} || true
 k3d cluster create \
+	${CLUSTER_NAME} \
 	--image rancher/k3s:${K3S_IMAGE_TAG} \
-	-p 8080:80@loadbalancer \
-	${CLUSTER_NAME}
+	--port 8080:80@loadbalancer:*:direct
 
 # Build
 make test

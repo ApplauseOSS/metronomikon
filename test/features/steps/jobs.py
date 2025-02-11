@@ -4,6 +4,7 @@ import time
 
 from behave import *
 
+
 @when('we request all jobs')
 def step_impl(context):
     resp = common.send_api_request(context, 'GET', 'v1/jobs')
@@ -105,7 +106,7 @@ def step_impl(context):
             jobId=context.job_id,
             status='COMPLETED',
             tasks=[
-              re.compile(r'%s-[0-9]+-.+' % context.job_id),
+                re.compile(r'%s-[0-9]+-.+' % context.job_id),
             ],
         )
         if common.validate_response_content(item, exp):

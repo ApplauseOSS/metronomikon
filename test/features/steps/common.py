@@ -17,7 +17,7 @@ def check_response_status(resp, expected_status=None):
         if expected_status is None:
             resp.raise_for_status()
         else:
-            assert(resp.status_code == expected_status)
+            assert (resp.status_code == expected_status)
     except:
         print('Request headers:')
         print()

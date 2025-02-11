@@ -20,7 +20,7 @@ func DeleteCronJob(namespace string, name string) (*batchv1.CronJob, error) {
 	if err != nil {
 		return nil, err
 	}
-	err = client.BatchV1beta1().CronJobs(namespace).Delete(context.TODO(), name, metav1.DeleteOptions{})
+	err = client.BatchV1().CronJobs(namespace).Delete(context.TODO(), name, metav1.DeleteOptions{})
 	if err != nil {
 		return job, err
 	}

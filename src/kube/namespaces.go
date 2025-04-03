@@ -19,8 +19,8 @@ func GetNamespaces() ([]string, error) {
 	if len(cfg.Kubernetes.Namespace.Whitelist) > 0 {
 		for _, namespace := range namespaces.Items {
 			for _, tmp_namespace := range cfg.Kubernetes.Namespace.Whitelist {
-				if tmp_namespace == namespace.ObjectMeta.Name {
-					ret = append(ret, namespace.ObjectMeta.Name)
+				if tmp_namespace == namespace.Name {
+					ret = append(ret, namespace.Name)
 					break
 				}
 			}
@@ -29,13 +29,13 @@ func GetNamespaces() ([]string, error) {
 		for _, namespace := range namespaces.Items {
 			found := false
 			for _, tmp_namespace := range cfg.Kubernetes.Namespace.Blacklist {
-				if tmp_namespace == namespace.ObjectMeta.Name {
+				if tmp_namespace == namespace.Name {
 					found = true
 					break
 				}
 			}
 			if !found {
-				ret = append(ret, namespace.ObjectMeta.Name)
+				ret = append(ret, namespace.Name)
 			}
 		}
 	}

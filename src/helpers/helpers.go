@@ -91,7 +91,7 @@ type MetronomeJobRun struct {
 func CronJobKubernetesToMetronome(cronJob *batchv1.CronJob) *MetronomeJob {
 	ret := &MetronomeJob{}
 	cfg := config.GetConfig()
-	ret.Id = fmt.Sprintf("%s.%s", cronJob.ObjectMeta.Namespace, cronJob.ObjectMeta.Name)
+	ret.Id = fmt.Sprintf("%s.%s", cronJob.Namespace, cronJob.Name)
 	// Metronome only supports a single container, so we grab the first one
 	// XXX: make this configurable?
 	container := cronJob.Spec.JobTemplate.Spec.Template.Spec.Containers[0]
@@ -128,9 +128,9 @@ func firstJobConditionFailedTime(conditions []batchv1.JobCondition) string {
 // Convert Kubernetes Job to Metronome job run format
 func JobKubernetesToMetronome(job *batchv1.Job) *MetronomeJobRun {
 	ret := &MetronomeJobRun{}
-	ret.Id = fmt.Sprintf("%s.%s", job.ObjectMeta.Namespace, job.ObjectMeta.Name)
-	ret.JobId = fmt.Sprintf("%s.%s", job.ObjectMeta.Namespace, job.ObjectMeta.OwnerReferences[0].Name)
-	ret.CreatedAt = job.ObjectMeta.CreationTimestamp.String()
+	ret.Id = fmt.Sprintf("%s.%s", job.Namespace, job.Name)
+	ret.JobId = fmt.Sprintf("%s.%s", job.Namespace, job.ObjectMeta.OwnerReferences[0].Name)
+	ret.CreatedAt = job.CreationTimestamp.String()
 	if job.Status.StartTime == nil {
 		ret.Status = "STARTING"
 	} else if job.Status.Failed > 0 || anyJobConditionsFailed(job.Status.Conditions) {
@@ -199,9 +199,9 @@ func HandleGetJobEmbed(embed string, metronomeJob *MetronomeJob) (*MetronomeJob,
 func MatchKubeJobWithPods(jobId string, pods []corev1.Pod) []string {
 	result := []string{}
 	for _, pod := range pods {
-		for _, ownerReference := range pod.ObjectMeta.GetOwnerReferences() {
-			if fmt.Sprintf("%s.%s", pod.ObjectMeta.Namespace, ownerReference.Name) == jobId {
-				result = append(result, fmt.Sprintf("%s.%s", pod.ObjectMeta.Namespace, pod.Name))
+		for _, ownerReference := range pod.GetOwnerReferences() {
+			if fmt.Sprintf("%s.%s", pod.Namespace, ownerReference.Name) == jobId {
+				result = append(result, fmt.Sprintf("%s.%s", pod.Namespace, pod.Name))
 				break
 			}
 		}

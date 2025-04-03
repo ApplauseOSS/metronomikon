@@ -53,7 +53,7 @@ func GetPods(namespace string, ownerKind string) ([]corev1.Pod, error) {
 	}
 	result := []corev1.Pod{}
 	for _, pod := range pods.Items {
-		for _, ownerReference := range pod.ObjectMeta.GetOwnerReferences() {
+		for _, ownerReference := range pod.GetOwnerReferences() {
 			if ownerReference.Kind == ownerKind {
 				result = append(result, pod)
 				break
@@ -70,7 +70,7 @@ func GetJobsFromCronJob(namespace string, cronJobName string) ([]batchv1.Job, er
 	}
 	res := []batchv1.Job{}
 	for _, job := range jobs.Items {
-		for _, ownerReference := range job.ObjectMeta.GetOwnerReferences() {
+		for _, ownerReference := range job.GetOwnerReferences() {
 			if ownerReference.Name == cronJobName {
 				res = append(res, job)
 				break
@@ -92,7 +92,7 @@ func CreateJobFromCronjob(cronJob *batchv1.CronJob) (*batchv1.Job, error) {
 	jobDef := &batchv1.Job{
 		TypeMeta: metav1.TypeMeta{APIVersion: batchv1.SchemeGroupVersion.String(), Kind: "Job"},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:        fmt.Sprintf("%s-%d", cronJob.ObjectMeta.Name, time.Now().Unix()),
+			Name:        fmt.Sprintf("%s-%d", cronJob.Name, time.Now().Unix()),
 			Annotations: annotations,
 			Labels:      cronJob.Spec.JobTemplate.Labels,
 			OwnerReferences: []metav1.OwnerReference{

@@ -7,7 +7,7 @@ toolchain go1.24.6
 require (
 	github.com/gin-gonic/gin v1.10.1
 	gopkg.in/yaml.v2 v2.4.0
-	k8s.io/api v0.34.0
+	k8s.io/api v0.34.1
 	k8s.io/apimachinery v0.34.1
 	k8s.io/client-go v0.34.0
 )

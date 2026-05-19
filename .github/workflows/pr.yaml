@@ -9,14 +9,14 @@ jobs:
   Run-CI-Script:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-python@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 https://github.com/actions/checkout/releases/tag/v6.0.2
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0 https://github.com/actions/setup-python/releases/tag/v6.2.0
         with:
           python-version: '3.12'
-      - uses: actions/setup-go@v6
+      - uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0 https://github.com/actions/setup-go/releases/tag/v6.4.0
         with:
-          go-version: '1.25'
-      - uses: azure/setup-kubectl@v4
+          go-version: '1.26'
+      - uses: azure/setup-kubectl@829323503d1be3d00ca8346e5391ca0b07a9ab0d # v5.1.0 https://github.com/azure/setup-kubectl/releases/tag/v5.1.0
         with:
-          version: 'v1.21.8' # default is latest stable
+          version: 'v1.34.7'
       - run: ci/pr.sh

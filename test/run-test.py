@@ -20,8 +20,9 @@ if PY3:
 else:
     string_types = (basestring,)
 
+
 def compare_structures(data1, data2, use_regex=False):
-    if type(data1) != type(data2):
+    if type(data1) is not type(data2):
         if use_regex and isinstance(data1, int) and isinstance(data2, string_types):
             if re.match(data2, str(data1)) is None:
                 return False
@@ -65,6 +66,7 @@ def compare_structures(data1, data2, use_regex=False):
         return (data1 == data2)
     return True
 
+
 def perform_request(test_data, url):
     global PRESERVED_KEYS
     if test_data['method'] == 'GET':
@@ -96,6 +98,7 @@ def perform_request(test_data, url):
             PRESERVED_KEYS = r.json()
     return True
 
+
 ENDPOINT = sys.argv[1]
 TEST_DIR = sys.argv[2]
 
@@ -120,7 +123,7 @@ for step in steps:
         if perform_request(step, url):
             test_success = True
             break
-        print("Attempt %s of %s failed" % (i+1, retries + 1 ))
+        print("Attempt %s of %s failed" % (i+1, retries + 1))
         time.sleep(1)
 
     if test_success:
